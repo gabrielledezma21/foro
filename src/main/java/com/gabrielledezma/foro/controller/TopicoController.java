@@ -1,14 +1,7 @@
 package com.gabrielledezma.foro.controller;
 
-import com.gabrielledezma.foro.domain.DTO.topico.DatosRegistroTopico;
-import com.gabrielledezma.foro.domain.DTO.topico.DatosRespuestaTopico;
-import com.gabrielledezma.foro.domain.service.TopicoService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
+    /*
     @Autowired
     private TopicoService topicoService;
 
@@ -27,4 +21,6 @@ public class TopicoController {
         return ResponseEntity.ok(respuestaTopico);
 
     }
+    */
+
 }
