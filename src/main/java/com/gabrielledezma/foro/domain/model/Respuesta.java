@@ -1,5 +1,6 @@
 package com.gabrielledezma.foro.domain.model;
 
+import com.gabrielledezma.foro.domain.DTO.respuesta.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,7 +22,7 @@ public class Respuesta {
     private Long id;
     private String mensaje;
     private LocalDate fechaCreacion;
-    private Boolean solucionado;
+    private Boolean activo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topico_id")
@@ -30,4 +31,31 @@ public class Respuesta {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    public Respuesta(DatosRegistroRespuesta datos, Topico topico, Usuario usuario) {
+        this.mensaje = datos.mensaje();
+        this.fechaCreacion = LocalDate.now();
+        this.activo = true;
+        this.topico = topico;
+        this.usuario = usuario;
+    }
+
+    public void darDeBaja(){
+        this.activo = false;
+    }
+
+    public void darDeAlta(){
+        this.activo = true;
+    }
+
+    public void actualizarDatos(DatosActualizarRespuesta datos) {
+        boolean seActualizo = false;
+        if(datos.mensaje() != null){
+            this.mensaje = datos.mensaje();
+            seActualizo = true;
+        }
+        if (seActualizo) {
+            this.fechaCreacion = LocalDate.now();
+        }
+    }
 }
