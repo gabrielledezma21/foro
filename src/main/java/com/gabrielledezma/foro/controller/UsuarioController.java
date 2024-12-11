@@ -49,11 +49,18 @@ public class UsuarioController {
         return ResponseEntity.created(url).body(respuestaUsuario);
     }
 
-    @GetMapping
+    @GetMapping("/listarTodos")
     @Secured("ROLE_ADMIN")
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Page<DatosListadoUsuario>> listar(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
         var respuesta = usuarioService.listar(paginacion);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<Page<DatosListadoActivosUsuario>> listarActivos(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
+        var respuesta = usuarioService.listarActivos(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
@@ -72,18 +79,26 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/reActivar/{id}")
     @Secured("ROLE_ADMIN")
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity reActivar(@PathVariable Long id) {
-        usuarioService.reActivar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<DatosRespuestaUsuario> reActivar(@PathVariable Long id) {
+        var respuesta = usuarioService.reActivar(id);
+        return ResponseEntity.ok(respuesta);
     }
 
     @GetMapping("/{id}")
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<DatosListadoUsuario> verUsuario(@PathVariable Long id) {
         var respuesta = usuarioService.verUsuario(id);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @PutMapping("/cambiarRol/{id}")
+    @Secured("ROLE_ADMIN")
+    @SecurityRequirement(name = "bearer-key")
+    public ResponseEntity<DatosCambioRolUsuario> cambiarRol(@PathVariable Long id) {
+        var respuesta = usuarioService.cambiarRol(id);
         return ResponseEntity.ok(respuesta);
     }
 

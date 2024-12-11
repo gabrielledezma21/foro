@@ -17,7 +17,9 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/cursos")
+@SecurityRequirement(name = "bearer-key")
 public class CursoController {
+
     @Autowired
     private CursoService cursoService;
 
@@ -30,14 +32,12 @@ public class CursoController {
     }
 
     @GetMapping
-    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Page<DatosListadoCurso>> listar(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
         var respuesta = cursoService.listar(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
     @PutMapping
-    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<DatosRespuestaCurso> actualizar(@RequestBody @Valid DatosActualizarCurso datos) {
         var respuesta = cursoService.actualizar(datos);
         return ResponseEntity.ok(respuesta);
@@ -45,22 +45,19 @@ public class CursoController {
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
-    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity eliminar(@PathVariable Long id) {
         cursoService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/reActivar/{id}")
     @Secured("ROLE_ADMIN")
-    @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity reActivar(@PathVariable Long id) {
-        cursoService.reActivar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<DatosRespuestaCurso> reActivar(@PathVariable Long id) {
+        var respuesta = cursoService.reActivar(id);
+        return ResponseEntity.ok(respuesta);
     }
 
     @GetMapping("/{id}")
-    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<DatosListadoCurso> verUsuario(@PathVariable Long id) {
         var respuesta = cursoService.verUsuario(id);
         return ResponseEntity.ok(respuesta);

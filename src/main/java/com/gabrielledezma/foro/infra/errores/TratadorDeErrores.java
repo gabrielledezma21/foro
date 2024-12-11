@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class TratadorDeErrores {
 
-    /*
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity tratarError404(){
         return ResponseEntity.notFound().build();
@@ -35,5 +35,5 @@ public class TratadorDeErrores {
     public ResponseEntity tratarErrorDeValidacion(ValidacionException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
-    */
+
 }

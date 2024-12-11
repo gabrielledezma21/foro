@@ -1,5 +1,6 @@
 package com.gabrielledezma.foro.domain.model;
 
+import com.gabrielledezma.foro.domain.DTO.topico.DatosActualizarTopico;
 import com.gabrielledezma.foro.domain.DTO.topico.DatosRegistroTopico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,13 +34,36 @@ public class Topico {
     @JoinColumn(name = "curso_id")
     private Curso curso;
 
-    public Topico(DatosRegistroTopico datos){
+    public Topico(DatosRegistroTopico datos, Usuario usuario, Curso curso) {
         this.titulo = datos.titulo();
         this.mensaje = datos.mensaje();
         this.fechaCreacion = LocalDate.now();
         this.estado = true;
-        this.usuario = datos.usuario();
-        this.curso = datos.curso();
+        this.usuario = usuario;
+        this.curso = curso;
+    }
+
+    public void darDeBaja(){
+        this.estado = false;
+    }
+
+    public void darDeAlta(){
+        this.estado = true;
+    }
+
+    public void actualizarDatos(DatosActualizarTopico datos) {
+        boolean seActualizo = false;
+        if(datos.titulo() != null){
+            this.titulo = datos.titulo();
+            seActualizo = true;
+        }
+        if(datos.mensaje() != null){
+            this.mensaje = datos.mensaje();
+            seActualizo = true;
+        }
+        if (seActualizo) {
+            this.fechaCreacion = LocalDate.now();
+        }
     }
 
 }

@@ -7,6 +7,5 @@ public record DatosActualizarCurso(
         @NotNull
         Long id,
         String nombre,
-        Categoria categoria
-) {
+        Categoria categoria) {
 }

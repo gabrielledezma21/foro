@@ -1,9 +1,6 @@
 package com.gabrielledezma.foro.domain.service;
 
-import com.gabrielledezma.foro.domain.DTO.usuario.DatosActualizarUsuario;
-import com.gabrielledezma.foro.domain.DTO.usuario.DatosListadoUsuario;
-import com.gabrielledezma.foro.domain.DTO.usuario.DatosRegistroUsuario;
-import com.gabrielledezma.foro.domain.DTO.usuario.DatosRespuestaUsuario;
+import com.gabrielledezma.foro.domain.DTO.usuario.*;
 import com.gabrielledezma.foro.domain.model.Usuario;
 import com.gabrielledezma.foro.domain.repository.UsuarioRepository;
 import com.gabrielledezma.foro.infra.security.SecurityConfigurations;
@@ -35,6 +32,11 @@ public class UsuarioService {
                 .map(DatosListadoUsuario::new);
     }
 
+    public Page<DatosListadoActivosUsuario> listarActivos(Pageable paginacion){
+        return usuarioRepository.findByActivoTrue(paginacion)
+                .map(DatosListadoActivosUsuario::new);
+    }
+
     @Transactional
     public DatosRespuestaUsuario actualizar(DatosActualizarUsuario datos){
         Usuario u = usuarioRepository.getReferenceById(datos.id());
@@ -49,14 +51,22 @@ public class UsuarioService {
     }
 
     @Transactional
-    public void reActivar(Long id){
+    public DatosRespuestaUsuario reActivar(Long id){
         Usuario u = usuarioRepository.getReferenceById(id);
         u.darDeAlta();
+        return new DatosRespuestaUsuario(u);
     }
 
     public DatosListadoUsuario verUsuario(Long id){
         Usuario u = usuarioRepository.getReferenceById(id);
         return new DatosListadoUsuario(u);
+    }
+
+    @Transactional
+    public DatosCambioRolUsuario cambiarRol(Long id){
+        Usuario u = usuarioRepository.getReferenceById(id);
+        u.cambiarRol();
+        return new DatosCambioRolUsuario(u);
     }
 
 }

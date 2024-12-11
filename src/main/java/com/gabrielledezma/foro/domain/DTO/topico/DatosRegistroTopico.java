@@ -1,18 +1,18 @@
 package com.gabrielledezma.foro.domain.DTO.topico;
 
 
-import com.gabrielledezma.foro.domain.model.Curso;
-import com.gabrielledezma.foro.domain.model.Usuario;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record DatosRegistroTopico(
         @NotBlank
         String titulo,
         @NotBlank
         String mensaje,
-        Usuario usuario,
-        Curso curso) {
-
-
+        @NotNull
+        Long idUsuario,
+        @NotNull
+        Long idCurso) {
 
 }

@@ -46,9 +46,10 @@ public class CursoService {
     }
 
     @Transactional
-    public void reActivar(Long id){
+    public DatosRespuestaCurso reActivar(Long id){
         Curso c = cursoRepository.getReferenceById(id);
         c.darDeAlta();
+        return new DatosRespuestaCurso(c);
     }
 
     public DatosListadoCurso verUsuario(Long id){
