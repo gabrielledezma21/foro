@@ -44,7 +44,6 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<DatosRespuestaUsuario> registrar(@RequestBody @Valid DatosRegistroUsuario datos,
                                                                  UriComponentsBuilder uriComponentsBuilder){
-        System.out.println(datos);
         var respuestaUsuario = usuarioService.registrar(datos);
         URI url = uriComponentsBuilder.path("/usuarios/{id}").buildAndExpand(respuestaUsuario.id()).toUri();
         return ResponseEntity.created(url).body(respuestaUsuario);

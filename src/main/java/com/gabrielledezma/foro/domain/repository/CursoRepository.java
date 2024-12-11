@@ -9,8 +9,8 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
     @Query("""
             SELECT c.activo
             FROM Curso c
-            WHERE 
-            c.id = :idCurso
+            WHERE c.id = :idCurso
             """)
     boolean findActivoById(Long idCurso);
+
 }

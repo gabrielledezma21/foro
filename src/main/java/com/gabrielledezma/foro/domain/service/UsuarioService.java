@@ -20,15 +20,12 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    private PasswordEncoder passwordEncoder = new SecurityConfigurations().passwordEncoder();
+    private final PasswordEncoder passwordEncoder = new SecurityConfigurations().passwordEncoder();
 
     @Transactional
     public DatosRespuestaUsuario registrar(DatosRegistroUsuario datos) {
-
         String contraDecodificada = passwordEncoder.encode(datos.contrasenia());
-
         Usuario u = new Usuario(datos, contraDecodificada);
-
         usuarioRepository.save(u);
         return new DatosRespuestaUsuario(u);
     }
@@ -42,8 +39,7 @@ public class UsuarioService {
     public DatosRespuestaUsuario actualizar(DatosActualizarUsuario datos){
         Usuario u = usuarioRepository.getReferenceById(datos.id());
         u.actualizarDatos(datos, passwordEncoder);
-        var respuesta = new DatosRespuestaUsuario(u);
-        return respuesta;
+        return new DatosRespuestaUsuario(u);
     }
 
     @Transactional
@@ -60,7 +56,7 @@ public class UsuarioService {
 
     public DatosListadoUsuario verUsuario(Long id){
         Usuario u = usuarioRepository.getReferenceById(id);
-        var respuesta = new DatosListadoUsuario(u);
-        return respuesta;
+        return new DatosListadoUsuario(u);
     }
+
 }
