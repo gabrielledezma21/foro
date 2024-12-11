@@ -37,7 +37,7 @@ public class RespuestaService {
         if(!usuarioRepository.findActivoById(datos.idUsuario())){
             throw new ValidacionException("No existe ese usuario o se encuentra dado de baja");
         }
-        if(!topicoRepository.findActivoById(datos.idTopico())){
+        if(!topicoRepository.findEstadoById(datos.idTopico())){
             throw new ValidacionException("No existe ese tópico o se encuentra dado de baja");
         }
 
@@ -50,8 +50,13 @@ public class RespuestaService {
         return new DatosRespuestaRespuesta(r);
     }
 
-    public Page<DatosListadoRespuesta> listar(Pageable paginacion) {
+    public Page<DatosListadoActivosRespuesta> listar(Pageable paginacion) {
         return respuestaRepository.findByActivoTrue(paginacion)
+                .map(DatosListadoActivosRespuesta::new);
+    }
+
+    public Page<DatosListadoRespuesta> listarTodos(Pageable paginacion) {
+        return respuestaRepository.findAll(paginacion)
                 .map(DatosListadoRespuesta::new);
     }
 
@@ -75,8 +80,8 @@ public class RespuestaService {
         return new DatosRespuestaRespuesta(r);
     }
 
-    public DatosListadoRespuesta verRespuesta(Long id) {
+    public DatosListadoActivosRespuesta verRespuesta(Long id) {
         Respuesta r = respuestaRepository.getReferenceById(id);
-        return new DatosListadoRespuesta(r);
+        return new DatosListadoActivosRespuesta(r);
     }
 }

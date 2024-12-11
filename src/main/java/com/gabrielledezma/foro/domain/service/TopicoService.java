@@ -50,8 +50,13 @@ public class TopicoService {
         return new DatosRespuestaTopico(t);
     }
 
-    public Page<DatosListadoTopico> listar(Pageable paginacion) {
+    public Page<DatosListadoActivosTopico> listar(Pageable paginacion) {
         return topicoRepository.findByEstadoTrue(paginacion)
+                .map(DatosListadoActivosTopico::new);
+    }
+
+    public Page<DatosListadoTopico> listarTodos(Pageable paginacion) {
+        return topicoRepository.findAll(paginacion)
                 .map(DatosListadoTopico::new);
     }
 
@@ -75,8 +80,8 @@ public class TopicoService {
         return new DatosRespuestaTopico(t);
     }
 
-    public DatosListadoTopico verTopico(Long id) {
+    public DatosListadoActivosTopico verTopico(Long id) {
         Topico t = topicoRepository.getReferenceById(id);
-        return new DatosListadoTopico(t);
+        return new DatosListadoActivosTopico(t);
     }
 }

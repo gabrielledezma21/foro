@@ -32,8 +32,15 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListadoCurso>> listar(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoActivosCurso>> listar(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
         var respuesta = cursoService.listar(paginacion);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/listarTodos")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<Page<DatosListadoCurso>> listarTodos(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
+        var respuesta = cursoService.listarTodos(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
@@ -58,7 +65,7 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosListadoCurso> verUsuario(@PathVariable Long id) {
+    public ResponseEntity<DatosListadoActivosCurso> verUsuario(@PathVariable Long id) {
         var respuesta = cursoService.verUsuario(id);
         return ResponseEntity.ok(respuesta);
     }

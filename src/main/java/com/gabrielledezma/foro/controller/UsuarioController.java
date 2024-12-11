@@ -52,14 +52,14 @@ public class UsuarioController {
     @GetMapping("/listarTodos")
     @Secured("ROLE_ADMIN")
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<Page<DatosListadoUsuario>> listar(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoUsuario>> listar(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
         var respuesta = usuarioService.listar(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
     @GetMapping
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<Page<DatosListadoActivosUsuario>> listarActivos(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoActivosUsuario>> listarActivos(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
         var respuesta = usuarioService.listarActivos(paginacion);
         return ResponseEntity.ok(respuesta);
     }
@@ -89,7 +89,7 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity<DatosListadoUsuario> verUsuario(@PathVariable Long id) {
+    public ResponseEntity<DatosListadoActivosUsuario> verUsuario(@PathVariable Long id) {
         var respuesta = usuarioService.verUsuario(id);
         return ResponseEntity.ok(respuesta);
     }

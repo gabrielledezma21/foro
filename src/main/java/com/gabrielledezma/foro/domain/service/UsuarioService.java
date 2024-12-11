@@ -57,9 +57,9 @@ public class UsuarioService {
         return new DatosRespuestaUsuario(u);
     }
 
-    public DatosListadoUsuario verUsuario(Long id){
+    public DatosListadoActivosUsuario verUsuario(Long id){
         Usuario u = usuarioRepository.getReferenceById(id);
-        return new DatosListadoUsuario(u);
+        return new DatosListadoActivosUsuario(u);
     }
 
     @Transactional

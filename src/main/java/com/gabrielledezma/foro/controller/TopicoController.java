@@ -32,8 +32,15 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListadoTopico>> listar(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoActivosTopico>> listar(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
         var respuesta = topicoService.listar(paginacion);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/listarTodos")
+    @Secured("ROLE_ADMIN")
+    public ResponseEntity<Page<DatosListadoTopico>> listarTodos(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
+        var respuesta = topicoService.listarTodos(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
@@ -44,12 +51,13 @@ public class TopicoController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity eliminar(@PathVariable Long id) {
         topicoService.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/reActivar/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<DatosRespuestaTopico> reActivar(@PathVariable Long id) {
         var respuesta = topicoService.reActivar(id);
@@ -57,7 +65,7 @@ public class TopicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosListadoTopico> verUsuario(@PathVariable Long id) {
+    public ResponseEntity<DatosListadoActivosTopico> verUsuario(@PathVariable Long id) {
         var respuesta = topicoService.verTopico(id);
         return ResponseEntity.ok(respuesta);
     }

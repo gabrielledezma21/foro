@@ -7,6 +7,6 @@ public record DatosListadoCurso(Long id,
                                 String categoria,
                                 Boolean activo) {
     public DatosListadoCurso(Curso c) {
-        this(c.getId(), c.getNombre(), c.getCategoria().toString() , c.getActivo());
+        this(c.getId(), c.getNombre(), c.getCategoria().toString(), c.getActivo());
     }
 }

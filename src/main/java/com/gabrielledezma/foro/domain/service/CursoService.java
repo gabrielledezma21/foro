@@ -2,10 +2,7 @@ package com.gabrielledezma.foro.domain.service;
 
 
 
-import com.gabrielledezma.foro.domain.DTO.curso.DatosActualizarCurso;
-import com.gabrielledezma.foro.domain.DTO.curso.DatosListadoCurso;
-import com.gabrielledezma.foro.domain.DTO.curso.DatosRegistroCurso;
-import com.gabrielledezma.foro.domain.DTO.curso.DatosRespuestaCurso;
+import com.gabrielledezma.foro.domain.DTO.curso.*;
 import com.gabrielledezma.foro.domain.model.Curso;
 import com.gabrielledezma.foro.domain.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,12 @@ public class CursoService {
         return new DatosRespuestaCurso(c);
     }
 
-    public Page<DatosListadoCurso> listar(Pageable paginacion){
+    public Page<DatosListadoActivosCurso> listar(Pageable paginacion){
+        return cursoRepository.findByActivoTrue(paginacion)
+                .map(DatosListadoActivosCurso::new);
+    }
+
+    public Page<DatosListadoCurso> listarTodos(Pageable paginacion){
         return cursoRepository.findAll(paginacion)
                 .map(DatosListadoCurso::new);
     }
@@ -52,9 +54,9 @@ public class CursoService {
         return new DatosRespuestaCurso(c);
     }
 
-    public DatosListadoCurso verUsuario(Long id){
+    public DatosListadoActivosCurso verUsuario(Long id){
         Curso c = cursoRepository.getReferenceById(id);
-        return new DatosListadoCurso(c);
+        return new DatosListadoActivosCurso(c);
     }
 
 }

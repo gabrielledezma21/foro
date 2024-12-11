@@ -32,8 +32,14 @@ public class RespuestaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListadoRespuesta>> listar(@PageableDefault(size = 2, sort = "nombre") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoActivosRespuesta>> listar(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
         var respuesta = respuestaService.listar(paginacion);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/listarTodos")
+    public ResponseEntity<Page<DatosListadoRespuesta>> listarTodos(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
+        var respuesta = respuestaService.listarTodos(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
@@ -49,7 +55,7 @@ public class RespuestaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/reActivar/{id}")
     @Secured("ROLE_ADMIN")
     public ResponseEntity<DatosRespuestaRespuesta> reActivar(@PathVariable Long id) {
         var respuesta = respuestaService.reActivar(id);
@@ -57,7 +63,7 @@ public class RespuestaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosListadoRespuesta> verUsuario(@PathVariable Long id) {
+    public ResponseEntity<DatosListadoActivosRespuesta> verUsuario(@PathVariable Long id) {
         var respuesta = respuestaService.verRespuesta(id);
         return ResponseEntity.ok(respuesta);
     }
