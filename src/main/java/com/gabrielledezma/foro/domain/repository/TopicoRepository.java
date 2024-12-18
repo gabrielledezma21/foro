@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
+
 public interface TopicoRepository extends JpaRepository<Topico, Long> {
     Page<Topico> findByEstadoTrue(Pageable paginacion);
 
@@ -15,4 +17,9 @@ public interface TopicoRepository extends JpaRepository<Topico, Long> {
             WHERE t.id = :idTopico
             """)
     boolean findEstadoById(Long idTopico);
+
+    boolean existsByTituloAndMensaje(String titulo, String mensaje);
+
+    Page<Topico> findByCurso_idAndFechaCreacionBetween(Long idCurso, LocalDate fechaInicio, LocalDate fechaFin, Pageable pageable);
+
 }

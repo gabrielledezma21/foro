@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -32,15 +33,22 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DatosListadoActivosTopico>> listar(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoActivosTopico>> listar(@PageableDefault(size = 10, sort = "fechaCreacion", direction = Sort.Direction.ASC) Pageable paginacion){
         var respuesta = topicoService.listar(paginacion);
         return ResponseEntity.ok(respuesta);
     }
 
     @GetMapping("/listarTodos")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<Page<DatosListadoTopico>> listarTodos(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
+    public ResponseEntity<Page<DatosListadoTopico>> listarTodos(@PageableDefault(size = 10, sort = "id") Pageable paginacion){
         var respuesta = topicoService.listarTodos(paginacion);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("/listarPorNombreDeCurso={nombre}&Anio={anio}")
+    public ResponseEntity<Page<DatosListadoTopico>> listarTodosPorNombreDeCursoYAnio(@PageableDefault(size = 10, sort = "id") Pageable paginacion,
+                                                                @PathVariable String nombre, @PathVariable String anio){
+        var respuesta = topicoService.listarTodosPorNombreDeCursoYAnio(paginacion, nombre, anio);
         return ResponseEntity.ok(respuesta);
     }
 
@@ -65,7 +73,7 @@ public class TopicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DatosListadoActivosTopico> verUsuario(@PathVariable Long id) {
+    public ResponseEntity<DatosListadoTopico> verUsuario(@PathVariable Long id) {
         var respuesta = topicoService.verTopico(id);
         return ResponseEntity.ok(respuesta);
     }
