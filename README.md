@@ -5,11 +5,11 @@ Este proyecto es una API REST desarrollada con Spring para gestionar un foro en 
 ## Características del Proyecto
 
 - **Gestión de Entidades**:
-  Los usuarios pueden:
+  - Los usuarios pueden:
       - crear, listar, modificar y eliminar tópicos y repuestas.
       - crear, listar y modificar cursos.
       - crear, autenticar, listar y modificar su usuario.
-  Los admin pueden:
+  - Los admin pueden:
       - realizar las mismas acciones que los usuarios
       - listar eliminados y reactivar tópicos y respuestas.
       - eliminar, listar eliminados y reactivar cursos.
