@@ -38,6 +38,7 @@ public class RespuestaController {
     }
 
     @GetMapping("/listarTodos")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<DatosListadoRespuesta>> listarTodos(@PageableDefault(size = 5, sort = "id") Pageable paginacion){
         var respuesta = respuestaService.listarTodos(paginacion);
         return ResponseEntity.ok(respuesta);
