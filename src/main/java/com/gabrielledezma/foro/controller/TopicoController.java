@@ -59,7 +59,6 @@ public class TopicoController {
     }
 
     @DeleteMapping("/{id}")
-    @Secured("ROLE_ADMIN")
     public ResponseEntity eliminar(@PathVariable Long id) {
         topicoService.eliminar(id);
         return ResponseEntity.noContent().build();
